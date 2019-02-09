@@ -60,6 +60,10 @@ dependencies {
     kapt deps.room.compiler
     implementation deps.room.rxJava
 
+    implementation deps.koin.base
+    implementation deps.koin.scope
+    implementation deps.koin.viewModel
+
     implementation deps.retrofit.client
     implementation deps.retrofit.converterMoshi
     implementation deps.retrofit.rxJavaAdapter
