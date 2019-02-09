@@ -1,6 +1,6 @@
-package com.example.mobvies.model
+package com.example.mobvies.remote
 
-import com.example.mobvies.remote.BaseMoviesResponse
+import com.example.mobvies.model.MoviesModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
