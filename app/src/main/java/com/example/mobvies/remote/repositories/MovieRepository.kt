@@ -1,11 +1,9 @@
 package com.example.mobvies.remote.repositories
 
-import android.content.Context
-import com.example.mobvies.model.Api
+import com.example.mobvies.remote.Api
 import com.example.mobvies.model.MoviesModel
 import com.example.mobvies.remote.BaseMoviesResponse
 import com.example.mobvies.remote.DataHolder
-import com.example.mobvies.remote.enums.MovieType
 import io.reactivex.Single
 
 class MovieRepository(
@@ -18,7 +16,7 @@ class MovieRepository(
         page: Int = 1,
         language: String,
         region: String = ""
-    ): Single<DataHolder<BaseMoviesResponse<MoviesModel>>> {
+    ): Single<DataHolder<BaseMoviesResponse<List<MoviesModel>>>> {
         return service.sendRequest(
             api.getMovies(
                 movieType,
