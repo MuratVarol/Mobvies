@@ -1,4 +1,4 @@
-package com.example.mobvies
+package com.example.mobvies.viewentity
 
 data class MovieViewEntity(
     val movieId: Int,
