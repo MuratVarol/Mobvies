@@ -3,7 +3,7 @@ package com.example.mobvies.extension
 import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.turkcell.kasaonu.BuildConfig
+import com.example.mobvies.BuildConfig
 
 fun Context.debugToast(message: CharSequence) {
     if (BuildConfig.DEBUG)
@@ -11,10 +11,10 @@ fun Context.debugToast(message: CharSequence) {
 }
 
 fun Context.informToast(message: CharSequence) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-fun Fragment.informToast(message: CharSequence){
+fun Fragment.informToast(message: CharSequence) {
     Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
 }
 
