@@ -4,18 +4,35 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+//comment below apply code to disable "'variant.getExternalNativeBuildTasks()' is obsolete" error
+//apply plugin: 'io.fabric'
+
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.mobvies"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion buildConfig.minSdk
+        targetSdkVersion buildConfig.minSdk
+        versionCode generateVersionCode()
+        versionName generateVersionName()
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        dataBinding.enabled = true
     }
+
+    // to support experimental extensions such as synthetic, @Parcelize etc
+    androidExtensions {
+        experimental = true
+    }
+
+
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -24,11 +41,38 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+
+    implementation deps.kotlin.stdlib.jdk
+    implementation deps.androidx.core
+    implementation deps.androidx.appCompat
+    implementation deps.androidx.constraintLayout
+    implementation deps.androidx.recyclerView
+    implementation deps.androidx.cardView
+    implementation deps.androidx.supportLibrary
+    implementation deps.androidx.lifeCycle
+    implementation deps.androidx.liveData
+
+    implementation deps.okhttp.client
+
+    implementation deps.gson
+
+    implementation deps.room.base
+    kapt deps.room.compiler
+    implementation deps.room.rxJava
+
+    implementation deps.retrofit.client
+    implementation deps.retrofit.converterMoshi
+    implementation deps.retrofit.rxJavaAdapter
+
+    implementation deps.rx.java
+    implementation deps.rx.android
+
+    releaseImplementation deps.chuckOkHttp.release
+    debugImplementation deps.chuckOkHttp.debug
+
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
 }
