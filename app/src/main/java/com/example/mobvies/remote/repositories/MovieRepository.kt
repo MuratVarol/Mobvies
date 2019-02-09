@@ -9,20 +9,20 @@ import com.example.mobvies.remote.enums.MovieType
 import io.reactivex.Single
 
 class MovieRepository(
-    private val context: Context,
     private val api: Api
-) : BaseRepository(context) {
+) : BaseRepository() {
 
-    fun getPopularMovies(
-        movieType: MovieType,
+    fun getMovies(
+        movieType: String,
+        apiKey: String,
         page: Int = 1,
-        language: String = getLocale(),
+        language: String,
         region: String = ""
     ): Single<DataHolder<BaseMoviesResponse<MoviesModel>>> {
         return service.sendRequest(
             api.getMovies(
-                getMovieTypeByEnum(movieType),
-                getApiKey(),
+                movieType,
+                apiKey,
                 page,
                 language,
                 region
@@ -30,12 +30,6 @@ class MovieRepository(
         )
     }
 
-    private fun getMovieTypeByEnum(movieType: MovieType): String {
-        return try {
-            MovieType.valueOf(movieType.name).getMovieType()
-        } catch (ex: Exception) {
-            MovieType.POPULAR.getMovieType()
-        }
-    }
+
 
 }
