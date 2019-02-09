@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.example.mobvies.BR
+import org.koin.androidx.viewmodel.ext.android.viewModelByClass
 import kotlin.reflect.KClass
 
 abstract class BaseActivity<out VM : ViewModel, DB : ViewDataBinding>(viewModelClass: KClass<VM>) :
