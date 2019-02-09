@@ -1,17 +1,23 @@
 package com.example.mobvies.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Entity(tableName = "movieModel")
 @Parcelize
 data class MoviesModel(
 
-    @SerializedName("vote_count")
-    val voteCount: Int?,
+    @PrimaryKey(autoGenerate = true)
+    val dbId : Int,
 
     @SerializedName("id")
     val id: Int?,
+
+    @SerializedName("vote_count")
+    val voteCount: Int?,
 
     @SerializedName("video")
     val isVideo: Boolean = false,
