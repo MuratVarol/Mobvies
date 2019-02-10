@@ -54,8 +54,6 @@ dependencies {
 
     implementation deps.okhttp.client
 
-    implementation deps.gson
-
     implementation deps.room.base
     kapt deps.room.compiler
     implementation deps.room.rxJava
@@ -65,7 +63,7 @@ dependencies {
     implementation deps.koin.viewModel
 
     implementation deps.retrofit.client
-    implementation deps.retrofit.converterMoshi
+    implementation deps.retrofit.convertorGson
     implementation deps.retrofit.rxJavaAdapter
 
     implementation deps.rx.java
