@@ -20,5 +20,16 @@ class RoomConvertor {
         return gson.fromJson(json, listType)
     }
 
+    @TypeConverter
+    fun fromGenreIds(list: List<Int>): String? {
+        return Gson().toJson(list)
+    }
+
+    @TypeConverter
+    fun toGenreIds(json: String): List<Int?>? {
+        val listType = object : TypeToken<ArrayList<Int>>() {}.type
+        return Gson().fromJson(json, listType)
+    }
+
 
 }
