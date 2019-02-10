@@ -1,8 +1,7 @@
 package com.example.mobvies
 
 import android.app.Application
-import com.example.mobvies.di.databaseModule
-import com.example.mobvies.di.networkModule
+import com.example.mobvies.di.*
 import org.koin.android.ext.android.startKoin
 
 class MainApplication : Application(){
@@ -17,7 +16,10 @@ class MainApplication : Application(){
             this,
             listOf(
                 networkModule,
-                databaseModule
+                databaseModule,
+                viewModelModule,
+                useCaseModule,
+                repositoryModule
             )
         )
     }
