@@ -1,7 +1,9 @@
 package com.example.mobvies.di
 
 import android.content.Context
+import com.example.mobvies.BASE_LINK
 import com.example.mobvies.remote.Api
+import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.readystatesoftware.chuck.ChuckInterceptor
 import io.reactivex.schedulers.Schedulers
@@ -10,7 +12,7 @@ import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -23,8 +25,10 @@ private const val CLIENT_CACHE_DIRECTORY = "http"
 val networkModule = module {
     single { createCache(androidContext()) }
     single { createChuckInterceptor(androidContext()) }
-    single("retrofitClient") { createOkHttpClient(get(), get()) }
-    single { createWebService<Api>(get(name = "retrofitClient"), get(name = "baseUrl")) }
+    single(name = "baseUrl") { getBaseUrl() }
+    single { createOkHttpClient(get(), get()) }
+    single { createGson() }
+    single { createWebService<Api>(get(), get(), get(name = "baseUrl")) }
 
 }
 
@@ -39,6 +43,10 @@ fun createCache(context: Context): Cache = Cache(
     ),
     CLIENT_CACHE_SIZE
 )
+
+fun createGson(): Gson {
+    return Gson()
+}
 
 
 fun createChuckInterceptor(context: Context): ChuckInterceptor {
@@ -62,6 +70,10 @@ fun createOkHttpClient(
     return okHttpBuilder.build()
 }
 
+fun getBaseUrl(): String {
+    return BASE_LINK
+}
+
 
 /**
  * Create Retrofit Client
@@ -70,12 +82,12 @@ fun createOkHttpClient(
  * We can use generics and reflection so ->
  *  we don't have to define required Api Interface here
  */
-inline fun <reified T> createWebService(okHttpClient: OkHttpClient, baseUrl: String): T {
+inline fun <reified T> createWebService(okHttpClient: OkHttpClient, gson: Gson, baseUrl: String): T {
     val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .client(okHttpClient)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     return retrofit.create(T::class.java)
 }
