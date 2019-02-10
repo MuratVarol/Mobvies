@@ -58,6 +58,8 @@ class MoviesModel(
 
 ) : Parcelable {
     val posterFullPath: String
+        get() = BASE_IMAGE_LINK.plus(posterPath)
+    val backDropFullPath: String
         get() = BASE_IMAGE_LINK.plus(backdropPath)
 }
 
