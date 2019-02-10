@@ -1,14 +1,14 @@
 package com.example.mobvies.usecase
 
 import android.content.Context
-import com.example.mobvies.BASE_LINK
-import com.example.mobvies.viewentity.MovieViewEntity
+import com.example.mobvies.BASE_IMAGE_LINK
 import com.example.mobvies.model.MoviesModel
 import com.example.mobvies.remote.BaseMoviesResponse
 import com.example.mobvies.remote.DataHolder
 import com.example.mobvies.remote.enums.MovieType
 import com.example.mobvies.remote.repositories.BaseUseCase
 import com.example.mobvies.remote.repositories.MovieRepository
+import com.example.mobvies.viewentity.MovieViewEntity
 import io.reactivex.Single
 
 class GetMoviesUseCase(
@@ -39,11 +39,11 @@ class GetMoviesUseCase(
 
         movieList.forEach { movieModel ->
             movieModel?.let {
-                movieModel.id?.let {
+                if (movieModel.id != null && movieModel.posterPath != null) {
                     val movieVE =
                         MovieViewEntity(
                             movieModel.id,
-                            posterPathToUri(movieModel.posterPath)
+                            movieModel.posterPath
                         )
                     movieViewEntityList.add(movieVE)
                 }
@@ -56,7 +56,7 @@ class GetMoviesUseCase(
 
     private fun posterPathToUri(posterPath: String?): String {
         return posterPath?.let {
-            BASE_LINK + posterPath
+            BASE_IMAGE_LINK + posterPath
         } ?: ""
     }
 
