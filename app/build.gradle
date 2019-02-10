@@ -71,12 +71,15 @@ dependencies {
     implementation deps.rx.java
     implementation deps.rx.android
 
+    implementation deps.glide.main
+    kapt deps.glide.compiler
+
     releaseImplementation deps.chuckOkHttp.release
     debugImplementation deps.chuckOkHttp.debug
 
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 
 }
