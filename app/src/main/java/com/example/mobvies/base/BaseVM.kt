@@ -13,7 +13,6 @@ open class BaseVM : ViewModel() {
 
     val disposables = CompositeDisposable()
 
-    val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val informMessage = MutableLiveData<String>()
 
