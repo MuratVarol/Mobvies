@@ -7,8 +7,8 @@ inline fun <T> LiveData<T>.observe(owner: LifecycleOwner, crossinline observer: 
     observe(owner, Observer { observer(it) })
 }
 
-operator fun <T> MutableLiveData<ArrayList<T>>.plusAssign(values: List<T>) {
-    val value = this.value ?: arrayListOf()
+operator fun <T> MutableLiveData<MutableList<T>>.plusAssign(values: MutableList<T>) {
+    val value = this.value ?: mutableListOf()
     value.addAll(values)
     this.value = value
 }
