@@ -21,7 +21,7 @@ class GetMoviesUseCase(
         page: Int = 1,
         language: String = getLocale(),
         region: String = ""
-    ): Single<DataHolder<BaseMoviesResponse<List<MoviesModel>>>> {
+    ): Single<DataHolder<BaseMoviesResponse<MutableList<MoviesModel>>>> {
         return movieRepository.getMovies(
             getMovieTypeByEnum(movieType),
             getApiKey(),

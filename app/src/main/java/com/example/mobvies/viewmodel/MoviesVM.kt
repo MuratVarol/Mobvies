@@ -15,12 +15,17 @@ class MoviesVM(
     private val getMoviesUseCase: GetMoviesUseCase
 ) : BaseVM() {
 
-    val popularMovieViewEntityList = MutableLiveData<ArrayList<MoviesModel>>()
-    val upcomingMovieViewEntityList = MutableLiveData<ArrayList<MoviesModel>>()
-    val latestMovieViewEntityList = MutableLiveData<ArrayList<MoviesModel>>()
+    val popularMovieViewEntityList = MutableLiveData<MutableList<MoviesModel>>()
+    val upcomingMovieViewEntityList = MutableLiveData<MutableList<MoviesModel>>()
+    val latestMovieViewEntityList = MutableLiveData<MutableList<MoviesModel>>()
+
+    val isLoading = SingleLiveEvent<Boolean>()
+    val isRefreshing = SingleLiveEvent<Boolean>()
+
+
+    val isNeedToResetScrollState = SingleLiveEvent<Boolean>()
 
     val selectedMovie = SingleLiveEvent<MoviesModel>()
-
 
     val itemClickListener = object : ItemClickListener<MoviesModel> {
         override fun onItemClick(view: View, item: MoviesModel, position: Int) {
@@ -29,9 +34,12 @@ class MoviesVM(
 
     }
 
+
+
     init {
         getPopularMovies(1)
     }
+
 
     fun getPopularMovies(page: Int) {
         getMovies(MovieType.POPULAR, page)
@@ -54,17 +62,31 @@ class MoviesVM(
             .subscribeOn(getBackgroundScheduler())
             .observeOn(getMainThreadScheduler())
             .subscribe { data ->
-                isLoading.postValue(true)
-
+                isLoading.postValue(false)
+                isRefreshing.postValue(false)
                 when (data) {
 
                     is DataHolder.Success -> {
 
-                        when (movieType) {
-                            MovieType.POPULAR -> popularMovieViewEntityList += data.data.results
-                            MovieType.LATEST -> latestMovieViewEntityList += data.data.results
-                            MovieType.UPCOMING -> upcomingMovieViewEntityList += data.data.results
+                        if (page == 1){
+                            isNeedToResetScrollState.postValue(true)
+
+                            when (movieType) {
+                                MovieType.POPULAR -> popularMovieViewEntityList.postValue(data.data.results)
+                                MovieType.LATEST -> latestMovieViewEntityList.postValue(data.data.results)
+                                MovieType.UPCOMING -> upcomingMovieViewEntityList.postValue(data.data.results)
+                            }
+
+                        }else{
+
+
+                            when (movieType) {
+                                MovieType.POPULAR -> popularMovieViewEntityList += data.data.results
+                                MovieType.LATEST -> latestMovieViewEntityList += data.data.results
+                                MovieType.UPCOMING -> upcomingMovieViewEntityList += data.data.results
+                            }
                         }
+
                     }
                 }
             }

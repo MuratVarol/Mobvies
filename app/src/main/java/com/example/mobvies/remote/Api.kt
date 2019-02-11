@@ -15,6 +15,6 @@ interface Api {
         @Query(value = "page") page: Int,
         @Query(value = "language") language: String,
         @Query(value = "region") region: String
-    ): Single<BaseMoviesResponse<List<MoviesModel>>>
+    ): Single<BaseMoviesResponse<MutableList<MoviesModel>>>
 
 }

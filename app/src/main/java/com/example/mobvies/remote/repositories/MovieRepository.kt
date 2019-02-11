@@ -16,7 +16,7 @@ class MovieRepository(
         page: Int = 1,
         language: String,
         region: String = ""
-    ): Single<DataHolder<BaseMoviesResponse<List<MoviesModel>>>> {
+    ): Single<DataHolder<BaseMoviesResponse<MutableList<MoviesModel>>>> {
         return service.sendRequest(
             api.getMovies(
                 movieType,
