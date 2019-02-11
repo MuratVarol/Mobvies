@@ -3,6 +3,7 @@ package com.example.mobvies.extension
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.mobvies.R
+import com.example.mobvies.util.GlideApp
 
 fun ImageView.setImageByUrl(url: String?) {
     if (url?.isNotEmpty() == true) {
