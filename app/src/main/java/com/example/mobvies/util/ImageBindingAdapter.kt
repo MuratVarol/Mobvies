@@ -1,8 +1,9 @@
-package com.example.mobvies.extension
+package com.example.mobvies.util
 
 import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.example.mobvies.extension.setImageByUrl
 
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, url: String?) {

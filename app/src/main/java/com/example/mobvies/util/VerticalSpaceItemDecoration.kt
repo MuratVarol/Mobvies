@@ -1,4 +1,4 @@
-package com.example.mobvies.extension
+package com.example.mobvies.util
 
 import android.graphics.Rect
 import android.view.View

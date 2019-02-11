@@ -1,4 +1,4 @@
-package com.example.mobvies.extension
+package com.example.mobvies.util
 
 import android.graphics.drawable.Drawable
 import androidx.databinding.BindingAdapter

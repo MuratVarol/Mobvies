@@ -1,4 +1,4 @@
-package com.example.mobvies.extension
+package com.example.mobvies.util
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
